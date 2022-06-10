@@ -10,10 +10,11 @@ from PIL import Image
 from spellchecker import SpellChecker
 from translate import Translator
 import subprocess
-import sys
+from mmocr.utils.ocr import MMOCR
 
 translate = Translator(to_lang="en")
 spellcheck = SpellChecker()
+mmocr = MMOCR()
 
 ocrBaseFilesPath =
 pythonPathLocalChangerLine = r"set PYTHONPATH = C:\Users\Arjun Sanghi\Desktop\Foreign Admission\Faircent\Work 1\ultimateMICR-SDK-master\binaries\windows\x86_64; C:\Users\Arjun Sanghi\Desktop\Foreign Admission\Faircent\Work 1\ultimateMICR-SDK-master\python"
