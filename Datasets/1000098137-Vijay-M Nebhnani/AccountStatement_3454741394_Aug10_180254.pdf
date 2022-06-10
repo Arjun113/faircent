@@ -1,0 +1,68 @@
+
+<HTML>
+<HEAD>
+<html>
+<head>
+<script language="javascript">
+document.onkeydown = function (event) {
+	
+	if (!event) { /* This will happen in IE */
+		event = window.event;
+	}
+		
+	var keyCode = event.keyCode;
+	
+	if (keyCode == 8 &&
+		((event.target || event.srcElement).tagName != "TEXTAREA") && 
+		((event.target || event.srcElement).tagName != "INPUT")) { 
+		
+		if (navigator.userAgent.toLowerCase().indexOf("msie") == -1) {
+			event.stopPropagation();
+		} else {
+			alert("prevented");
+			event.returnValue = false;
+		}
+	}
+		
+		
+		if (keyCode == 116) 
+		{ 
+				
+				if (navigator.userAgent.toLowerCase().indexOf("msie") == -1)
+				{
+					event.stopPropagation();
+				} else 
+				{
+					alert("prevented");
+					event.returnValue = false;
+				}
+		
+		return false;
+		}
+};
+</script>
+</head>
+<body>
+</body>
+</html>
+<TITLE>Error</TITLE>
+<Link rel="stylesheet" type="text/css" href="/cmn/msie_eng_th001Drop.css">
+<Link rel="stylesheet" type="text/css" href="/cmn/DotNetMSIE.css">
+
+
+</HEAD>
+<body> 
+<table align="center">
+
+<tr>
+
+	<!-- td class="eheader">&nbsp;&nbsp;310</td>
+	<td class="eheader">&nbsp;&nbsp;Your request could not be processed Try after some time </td -->
+	<td class="userInfo">310</td>
+	<td class="userInfo">&nbsp;&nbsp;Your request could not be processed Try after some time&nbsp;&nbsp;</td>
+
+
+</tr>
+</table>
+</body>
+</Html>
