@@ -17,7 +17,7 @@ def sortInformation(folderpath):
     nameAndLoanID = folderpathSplit[len(folderpathSplit) - 1]
 
     for document in os.listdir(folderpath):
-        if "PAN" in document:
+        if "PAN" in document or "AADHAAR" in document:
             with open(document, "r") as f:
                 parsedJSON = json.load(f)
                 parsedJSONText = parsedJSON["text"]
@@ -33,7 +33,7 @@ def sortInformation(folderpath):
                             word[6] in range (0, 10) and
                             word[7] in range (0, 10) and
                             word[8] in range (0, 10) and
-           arju                 ord(word[9]) in range (97, 123)):
+                            ord(word[9]) in range (97, 123)):
                                 panNumber = word
         if "AADHAAR" in document:
             with open(document, 'r') as f:
@@ -41,14 +41,20 @@ def sortInformation(folderpath):
                 parsedJSONText = parsedJSON["text"]
                 # There can be three possibilities: Aadhaar being recognized as one block, set of two blocks and three blocks
                 for i in range (0, len(parsedJSONText) - 3):
-                    word1 = parsedJSONText[i]
-                    word2 = parsedJSONText[i + 1]
-                    word3 = parsedJSONText[i + 2]
-                    if (len(word1) == 4 and word1 in range (0, 9999) and
-                            len(word2) == 4 and word2 in range (0, 9999) and
-                            len(word3) == 4 and word3 in range (0, 9999)):
-                        aadhaarNumber = word1 + word2 + word3
-        # Add more conditions here
+                    if parsedJSONText[i] in range (0, 9999999999):
+                        aadhaarNumber = parsedJSONText[i]
+        if "BANKSTATEMENT" in document:
+            with open(document, "r") as f:
+                parsedJSON = json.load(f)
+                parsedJSONText = parsedJSON["text"]
+                # Add any conditions here
+        if "CHEQUE" in document:
+            with open(document, "r") as f:
+                parsedJSON = json.load(f)
+                parsedJSONText = parsedJSON["text"]
+                # Add any conditions here
+
+
 
 
 

@@ -67,28 +67,28 @@ def recognizeFiles(filepath, namedict):
                 if "permanent" in usableText and "account" in usableText and "number" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "_PAN" + str(panDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "PAN" + str(panDocumentCounter) + ".png")
                     os.rename(source, dest)
                     panDocumentCounter += 1
                 # Aadhaar card verification
                 if "aadhaar" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "_AADHAAR" + str(aadharDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "AADHAAR" + str(aadharDocumentCounter) + ".png")
                     os.rename(source, dest)
                     aadharDocumentCounter += 1
                 # Bank Statement
                 if "statement" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "_BANKSTATEMENT" + str(bankStatementDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "BANKSTATEMENT" + str(bankStatementDocumentCounter) + ".png")
                     os.rename(source, dest)
                     bankStatementDocumentCounter += 1
                 # Cheque
                 if "bank" in usableText or "payable" in usableText or "bearer" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "_CHEQUE" + str(chequeDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "CHEQUE" + str(chequeDocumentCounter) + ".png")
                     os.rename(source, dest)
                     chequeDocumentCounter += 1
 
