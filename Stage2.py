@@ -33,9 +33,9 @@ def sortInformation(folderpath):
                             word[6] in range (0, 10) and
                             word[7] in range (0, 10) and
                             word[8] in range (0, 10) and
-                            ord(word[9]) in range (97, 123)):
+           arju                 ord(word[9]) in range (97, 123)):
                                 panNumber = word
-        elif "AADHAAR" in document:
+        if "AADHAAR" in document:
             with open(document, 'r') as f:
                 parsedJSON = json.load(f)
                 parsedJSONText = parsedJSON["text"]

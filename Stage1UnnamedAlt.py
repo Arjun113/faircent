@@ -59,22 +59,39 @@ def recognizeFiles(filepath, namedict):
             with open(os.path.join(filepath, document), "r") as f:
                 parsedJSONDict = json.load(f)
                 usableText = list(parsedJSONDict.get("text"))
+                misspelled = spellcheck.unknown(usableText)
+                for i in range (0, len(usableText)):
+                    if usableText[i] in misspelled:
+                        usableText[i] = spellcheck.correction(usableText[i])
                 # PAN card verification
                 if "permanent" in usableText and "account" in usableText and "number" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "PAN" + str(panDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "_PAN" + str(panDocumentCounter) + ".png")
                     os.rename(source, dest)
                     panDocumentCounter += 1
                 # Aadhaar card verification
-                elif "aadhaar" in usableText:
+                if "aadhaar" in usableText:
                     # Renaming
                     source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
-                    dest = os.path.join(filepath, "AADHAAR" + str(aadharDocumentCounter) + ".png")
+                    dest = os.path.join(filepath, "_AADHAAR" + str(aadharDocumentCounter) + ".png")
                     os.rename(source, dest)
                     aadharDocumentCounter += 1
-                # Add others here for chwque and bank statement
-                # else move for manual inspection if criteria does not fit
+                # Bank Statement
+                if "statement" in usableText:
+                    # Renaming
+                    source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
+                    dest = os.path.join(filepath, "_BANKSTATEMENT" + str(bankStatementDocumentCounter) + ".png")
+                    os.rename(source, dest)
+                    bankStatementDocumentCounter += 1
+                # Cheque
+                if "bank" in usableText or "payable" in usableText or "bearer" in usableText:
+                    # Renaming
+                    source = os.path.join(filepath, document[4:len(document) - 4] + ".png")
+                    dest = os.path.join(filepath, "_CHEQUE" + str(chequeDocumentCounter) + ".png")
+                    os.rename(source, dest)
+                    chequeDocumentCounter += 1
+
 
 
 
