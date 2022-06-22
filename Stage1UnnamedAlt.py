@@ -91,17 +91,3 @@ def recognizeFiles(filepath, namedict):
                     dest = os.path.join(filepath, "CHEQUE" + str(chequeDocumentCounter) + ".png")
                     os.rename(source, dest)
                     chequeDocumentCounter += 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
