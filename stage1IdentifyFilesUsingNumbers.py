@@ -9,7 +9,7 @@ ocrBasePath = # Insert path to the OCR base files (database of OCR.txt files pre
 
 # Functions begin here
 
-def checkForPAN(resultPath): # Argument has to be filled with path to the customer folder
+def checkForDocument(resultPath): # Argument has to be filled with path to the customer folder
     # Condition for preliminary PAN card = First three chars A-Z, fourth recognizer, fifth Surname first letter, 6-9 chars 0-9, 10th char checksum
     for document in os.listdir(resultPath):
         if ".txt" in os.path.join(resultPath, document): #Only text files will pass this check

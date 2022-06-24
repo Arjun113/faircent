@@ -23,7 +23,7 @@ def checkForNamed(filepath):
         for i in range(0, len(usableNameLowerCorrectedletterwise)):
             if usableNameLowerCorrectedletterwise[i] not in [" ", ".", ",", ":","\\","]", "[", "(", ")", "*", "#", "@", "!", "%", "^", "&", "`", "~", "<", ">", "?", "/", "|","-", "_", "=", "+", "{","}", ";", "/'", '"']:
                 editedString = editedString + usableNameLowerCorrectedletterwise[i]
-        edited_names[document] = editedString
+            edited_names[document] = editedString
 
     fileNameList = list(edited_names.keys())
     panFileCount = 0
