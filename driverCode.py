@@ -1,7 +1,6 @@
 # This code integrates all the main pieces of code together
 import json
 import random
-
 import stage0Prelim
 import Stage1UnnamedAlt
 import Stage1CheckForNamed
@@ -12,7 +11,7 @@ import shutil
 import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import requests
+from datetime import datetime
 
 # mySQL initialization
 myconnection = mysql.connect(host = "localhost", username = "arjun", pwd = "arjun", database = "faircent1") # Change host to your server
@@ -131,6 +130,11 @@ customerDetails["panNumberAsSubmitted"] = customerDataFrame["PAN Number"]
 customerDetails["aadhaarNumberAsSubmitted"] = customerDataFrame["Aadhaar Number"]
 customerDetails["loanAmountDesired"] = customerDataFrame["Loan Amount needed in Indian Rupees"]
 customerDetails["loanPurpose"] = customerDataFrame["Purpose of Loan"]
+customerDetails["emailID"] = customerDataFrame["Email Address"]
+customerDetails["mobileNumber"] = customerDataFrame["Mobile Number"]
+customerDetails["dob"] = customerDataFrame["Date of Birth"]
+customerDetails["panCardName"] = customerDataFrame["Name on PAN Card"]
+customerDetails["aadhaarCardName"] = customerDataFrame["Name on Aadhaar Card"]
 
 # Generate loan ID
 with open("listOfLoanIDTaken.json", "r") as file:
@@ -139,10 +143,36 @@ with open("listOfLoanIDTaken.json", "r") as file:
 loanIDCorrectlyGenerated = False
 while not loanIDCorrectlyGenerated:
     potentialLoanID = random.randint(100000000, 2000000000)
-    if potentialLoanID not in listOfLoanIDAlreadyTaken:
+    if str(potentialLoanID) not in listOfLoanIDAlreadyTaken:
         loanIDCorrectlyGenerated = True
         loanIDFinal = potentialLoanID
     else:
         loanIDCorrectlyGenerated = False
+listOfLoanIDAlreadyTaken.append(str(loanIDFinal))
+with open("listOfLoanIDTaken.json", "w+") as file: # Update JSON file containing the already allotted loan IDs
+    json_object = json.load(file)
+    json_object["data"] = listOfLoanIDAlreadyTaken
 
+
+# date of registration
+dateRegistration = datetime.today()
+
+# mySQL variables definition
+sql1 = "insert into demo (loanID, firstNameAsSubmitted, lastNameAsSubmitted, emailID, mobileNumber, gender, dateOfBirth, address, city, state, pincode, loanAmountDesired, loanPurpose, aadhaarNumberAsSubmitted, aadhaarNumber, panNumberAsSubmitted, panNumber, nameOnPanCard, nameonAadhaarCard, dateOfRegistration"
+sql2 = " values(%S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S, %S)"
+values = (loanIDFinal,)
+values = values + (customerDetails["firstName"], customerDetails["lastName"])
+values = values + (customerDetails["emailID"], customerDetails["mobileNumber"])
+values = values + (customerDetails["gender"], customerDetails["dob"])
+values = values + (customerDetails["address"], customerDetails["city"], customerDetails["state"], customerDetails["pinCode"])
+values = values + (customerDetails["loanAmountDesired"], customerDetails["loanPurpose"])
+values = values + (customerDetails["aadhaarNumberAsSubmitted"], panAadhaarDetailsTuple[1])
+values = values + (customerDetails["panNumberAsSubmitted"], panAadhaarDetailsTuple[0])
+values = values + (customerDetails["panCardName"], customerDetails["aadhaarCardName"], dateRegistration.strftime("%D//%M//%Y"))
+
+# mySQL command run
+mycursor.execute(sql1 + sql2, values)
+myconnection.commit()
+
+# I am operating under the assumption that basic checks for PAN and Aadhaar will be done from data collection end.
 
